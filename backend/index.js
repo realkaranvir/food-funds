@@ -4,6 +4,7 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 const PORT = 8000;
+require("dotenv").config();
 
 const itemRoutes = require("./routes/itemRoutes");
 
