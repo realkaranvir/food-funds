@@ -1,46 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import ItemTable from "../Components/ItemTable";
 import AddItem from "../Components/AddItem";
 import { Box, VStack, Text, Flex } from "@chakra-ui/react";
+import DashboardSection from "../Components/DashboardSection";
 import {
   primaryColor,
   accentOne,
   textColor2,
   accentTwo,
 } from "../themeSettings";
+import CostDisplay from "../Components/CostDisplay";
 
 function HomePage() {
+  const [updateDashboard, setUpdateDashboard] = useState(false); //When an item is added, flip the value, updating all dashboard items
   return (
     <VStack p={2} bg={primaryColor}>
-      <Box
-        width={{ base: "80vw", md: "300px" }}
-        height={{ base: "80vw", md: "300px" }}
-        bg={accentOne}
-        overflowY="auto" // Enable vertical scrolling
-        overflowX="hidden" // Disable horizontal scrolling
-        borderRadius="20px"
-        position="relative"
-      >
-        <Flex
-          justify="space-between"
-          align="center"
-          color={textColor2}
-          position="sticky"
-          zIndex="1000"
-          bg={accentTwo}
-          paddingLeft="10px"
-          paddingRight="10px"
-          top="0"
-          left="0"
-          marginBottom="10px"
-        >
-          <Text>Name</Text>
-          <Text>Expiration</Text>
-        </Flex>
-        <ItemTable />
-      </Box>
+      <DashboardSection
+        titlesArray={["Name", "Expiration"]}
+        Contents={<ItemTable updateVariable={updateDashboard} />}
+      />
+      <DashboardSection
+        Contents={
+          <CostDisplay updateVariable={updateDashboard} timeFrame={"month"} />
+        }
+        updateVariable={updateDashboard}
+      />
 
-      <AddItem />
+      <AddItem updateFunction={setUpdateDashboard} />
     </VStack>
   );
 }
