@@ -7,8 +7,9 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
+import { accentOne, accentTwo, textColor1, textColor2 } from "../themeSettings";
 
-function AddItem() {
+function AddItem({ updateFunction }) {
   const [foodData, setFoodData] = useState({
     name: "",
     cost: "",
@@ -39,7 +40,6 @@ function AddItem() {
         expiration_date: newFood.expiration_date,
         date_purchased: newFood.date_purchased,
       });
-      console.log("Food item added:", response.data);
     } catch (error) {
       console.log("error posting");
     }
@@ -61,16 +61,30 @@ function AddItem() {
       date_purchased: "",
     });
     await addFood(food);
+    updateFunction();
   };
 
   return (
-    <VStack as="form" onSubmit={handleSubmit} spacing={4} w="full">
+    <VStack
+      as="form"
+      onSubmit={handleSubmit}
+      spacing={1}
+      p={2}
+      borderRadius="20px"
+      minWidth={{ base: "80vw", md: "300px" }}
+      color={textColor2}
+      bg={accentTwo}
+    >
       <FormControl>
         <FormLabel>Name</FormLabel>
         <Input
           name="name"
           value={foodData.name}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -80,6 +94,10 @@ function AddItem() {
           name="cost"
           value={foodData.cost}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -89,6 +107,10 @@ function AddItem() {
           name="calories"
           value={foodData.calories}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -98,6 +120,10 @@ function AddItem() {
           name="protein"
           value={foodData.protein}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -107,6 +133,10 @@ function AddItem() {
           name="carbohydrates"
           value={foodData.carbohydrates}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -116,6 +146,10 @@ function AddItem() {
           name="fats"
           value={foodData.fats}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -125,6 +159,10 @@ function AddItem() {
           name="servings"
           value={foodData.servings}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -135,6 +173,10 @@ function AddItem() {
           name="expiration_date"
           value={foodData.expiration_date}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
@@ -145,6 +187,10 @@ function AddItem() {
           name="date_purchased"
           value={foodData.date_purchased}
           onChange={handleChange}
+          bg={accentOne}
+          color={textColor2}
+          size="sm"
+          borderRadius="5px"
           required
         />
       </FormControl>
