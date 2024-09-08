@@ -66,8 +66,26 @@ const foods = [
 ];
 
 router.get("/", async (req, res) => {
-  console.log("returned foods");
-  res.send(foods);
+  const { data, error } = await supabase.from("Items").select("*");
+
+  if (error) {
+    console.error("Select error: ", error);
+    res.status(500).end();
+  } else {
+    res.status(200).send(data);
+  }
+});
+
+router.post("/", async (req, res) => {
+  const foodItem = req.body;
+  const { error } = await supabase.from("Items").insert(foodItem);
+
+  if (error) {
+    res.status(500).end();
+  } else {
+    res.status(200).end();
+    console.log("Successfully inserted data: ", foodItem);
+  }
 });
 
 module.exports = router;

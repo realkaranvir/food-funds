@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { VStack, Box, Spinner, HStack, Text, Flex } from "@chakra-ui/react";
 import {
-  VStack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-} from "@chakra-ui/react";
+  primaryColor,
+  accentOne,
+  textColor1,
+  textColor2,
+} from "../themeSettings";
 
 function ItemTable() {
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState(null);
 
   // Fetch items when the component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get("http://localhost:8000/items");
+        console.log(response.data);
         const sortedFoods = response.data.sort(
           (foodOne, foodTwo) =>
             new Date(foodOne.expirationDate) - new Date(foodTwo.expirationDate)
@@ -32,43 +30,31 @@ function ItemTable() {
     fetchItems();
   }, []);
 
-  // Sort the foods by expiration date
-  foods.sort(
-    (foodOne, foodTwo) => foodOne.expirationDate > foodTwo.expirationDate
-  );
+  if (foods === null) {
+    return (
+      <div>
+        <Spinner boxSize="75px" />
+      </div>
+    );
+  }
 
   return (
     <VStack>
-      <TableContainer>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th>Price</Th>
-              <Th>Calories</Th>
-              <Th>Protein (g)</Th>
-              <Th>Carbs (g)</Th>
-              <Th>Fats (g)</Th>
-              <Th>Expiration Date</Th>
-              <Th>Purchase Date</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {foods.map((food, index) => (
-              <Tr key={index}>
-                <Td>{food.name}</Td>
-                <Td>${food.price.toFixed(2)}</Td>
-                <Td>{food.calories}</Td>
-                <Td>{food.protein}</Td>
-                <Td>{food.carbs}</Td>
-                <Td>{food.fats}</Td>
-                <Td>{food.expirationDate}</Td>
-                <Td>{food.purchaseDate}</Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      {foods.map((food, key) => (
+        <HStack
+          width={{ base: "70vw", md: "280px" }}
+          height={{ base: "10vw", md: "35px" }}
+          bg={primaryColor}
+          padding="4"
+          borderRadius="20px"
+          justify="space-between"
+          key={key}
+          color={textColor1}
+        >
+          <Text>{food.name}</Text>
+          <Text>{food.expiration_date}</Text>
+        </HStack>
+      ))}
     </VStack>
   );
 }
