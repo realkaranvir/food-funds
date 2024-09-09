@@ -7,7 +7,13 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { accentOne, accentTwo, textColor1, textColor2 } from "../themeSettings";
+import {
+  accentOne,
+  accentTwo,
+  primaryColor,
+  textColor1,
+  textColor2,
+} from "../themeSettings";
 
 function AddItem({ updateFunction }) {
   const [foodData, setFoodData] = useState({
@@ -28,6 +34,7 @@ function AddItem({ updateFunction }) {
   };
 
   const addFood = async (newFood) => {
+    console.log(newFood.expiration_date);
     try {
       const response = await axios.post("http://localhost:8000/items", {
         name: newFood.name,
@@ -69,7 +76,7 @@ function AddItem({ updateFunction }) {
       as="form"
       onSubmit={handleSubmit}
       spacing={1}
-      p={2}
+      p={4}
       borderRadius="20px"
       minWidth={{ base: "80vw", md: "300px" }}
       color={textColor2}

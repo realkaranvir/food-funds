@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ItemTable from "../Components/ItemTable";
 import AddItem from "../Components/AddItem";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, SettingsIcon } from "@chakra-ui/icons";
+import { CostDisplayTypes } from "../Enums";
 import {
   Box,
   VStack,
@@ -10,6 +11,7 @@ import {
   HStack,
   Button,
   useDisclosure,
+  Select,
 } from "@chakra-ui/react";
 import DashboardSection from "../Components/DashboardSection";
 import { primaryColor } from "../themeSettings";
@@ -22,6 +24,8 @@ function HomePage() {
   const updateDashboardFunction = () => {
     setUpdateDashboard(!updateDashboard);
   };
+  const [timeframe, setTimeFrame] = useState(7); //Timeframe for Expiring Soon list
+
   return (
     <Flex
       align={{ base: "center", md: "" }}
@@ -38,21 +42,33 @@ function HomePage() {
         gap="20px"
       >
         <DashboardSection
-          titlesArray={["Name", "Expiration"]}
-          Contents={<ItemTable updateVariable={updateDashboard} />}
-        />
-        <DashboardSection
+          title="Expiring Soon"
           Contents={
-            <CostDisplay updateVariable={updateDashboard} timeFrame={"month"} />
+            <ItemTable
+              updateVariable={updateDashboard}
+              foodSorterFunction={(foodOne, foodTwo) =>
+                new Date(foodOne.expiration_date) -
+                new Date(foodTwo.expiration_date)
+              }
+              foodFilterFunction={(food) => {
+                //Only get foods that are expiring within a week
+                const today = new Date();
+                const expirationDate = new Date(food.expiration_date);
+                const oneWeekFromToday = new Date(today);
+                oneWeekFromToday.setDate(today.getDate() + timeframe);
+
+                return expirationDate <= oneWeekFromToday;
+              }}
+            />
           }
         />
         <DashboardSection
-          titlesArray={["Name", "Expiration"]}
-          Contents={<ItemTable updateVariable={updateDashboard} />}
-        />
-        <DashboardSection
-          titlesArray={["Name", "Expiration"]}
-          Contents={<ItemTable updateVariable={updateDashboard} />}
+          Contents={
+            <CostDisplay
+              updateVariable={updateDashboard}
+              type={CostDisplayTypes.SUM_LAST_MONTH}
+            />
+          }
         />
       </Flex>
       <ModalComponent

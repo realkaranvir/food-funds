@@ -78,22 +78,28 @@ router.get("/", async (req, res) => {
 
 router.get("/amount-spent", async (req, res) => {
   const { startDate, endDate } = req.query;
-  const { data, error } = await supabase
-    .from("Items")
-    .select("*")
-    .gte("date_purchased", new Date(startDate).toISOString())
-    .lte("date_purchased", new Date(endDate).toISOString());
-  let cost = 0;
-  data.forEach((item) => {
-    cost += parseFloat(item.cost);
-  });
-  cost = cost.toFixed(2);
+  try {
+    const { data, error } = await supabase
+      .from("Items")
+      .select("*")
+      .gte("date_purchased", new Date(startDate).toISOString())
+      .lte("date_purchased", new Date(endDate).toISOString());
+    let cost = 0;
+    data.forEach((item) => {
+      cost += parseFloat(item.cost);
+    });
+    cost = cost.toFixed(2);
 
-  if (error) {
-    console.error("Select error: ", error);
-    res.status(500).end();
-  } else {
-    res.status(200).json({ cost });
+    if (error) {
+      console.error("Select error: ", error);
+      res.status(500).end();
+      return;
+    } else {
+      res.status(200).json({ cost });
+    }
+  } catch (err) {
+    console.error("Error: ", err);
+    res.status(500).json({ error: "An unexpected error occurred" });
   }
 });
 

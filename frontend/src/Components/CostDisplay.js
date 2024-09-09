@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { getStartAndEndOfMonth } from "../Utils";
 import axios from "axios";
+import { CostDisplayTypes } from "../Enums";
 
-function CostDisplay({ timeFrame, updateVariable }) {
+function CostDisplay({ type, updateVariable }) {
   const [amountSpent, setAmountSpent] = useState(null);
 
   // Fetch items when the component mounts
@@ -11,11 +12,11 @@ function CostDisplay({ timeFrame, updateVariable }) {
     let endDate = null;
     let startDate = null;
     const fetchAmountSpent = async () => {
-      if (timeFrame === "month") {
+      if (type === CostDisplayTypes.SUM_LAST_MONTH) {
         const { startOfMonth, endOfMonth } = getStartAndEndOfMonth();
         endDate = endOfMonth;
         startDate = startOfMonth;
-      } else if (timeFrame === "year") {
+      } else if (type === CostDisplayTypes.SUM_LAST_YEAR) {
         endDate = new Date();
         startDate = new Date(endDate.getFullYear(), 1, 1);
       }
@@ -42,10 +43,18 @@ function CostDisplay({ timeFrame, updateVariable }) {
       width="100%"
       height="100%"
       textAlign="center"
+      p={3}
     >
-      <Text fontSize="2rem" fontWeight="bold">
-        You spent ${amountSpent} this {timeFrame} on food
-      </Text>
+      {type === CostDisplayTypes.SUM_LAST_MONTH && (
+        <Text fontSize="2rem" fontWeight="bold">
+          You Spent ${amountSpent} This Month On Food
+        </Text>
+      )}
+      {type === CostDisplayTypes.SUM_LAST_YEAR && (
+        <Text fontSize="2rem" fontWeight="bold">
+          You Spent ${amountSpent} This Year On Food
+        </Text>
+      )}
     </Flex>
   );
 }

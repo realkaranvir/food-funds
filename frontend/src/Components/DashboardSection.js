@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { accentOne, accentTwo, textColor2 } from "../themeSettings";
 
-function DashboardSection({ titlesArray, Contents }) {
+function DashboardSection({ title, Contents }) {
   return (
     <Box
       width={{ base: "80vw", md: "300px" }}
@@ -13,23 +13,21 @@ function DashboardSection({ titlesArray, Contents }) {
       borderRadius="20px"
       position="relative"
     >
-      {titlesArray && (
+      {title && (
         <Flex
-          justify="space-between"
+          justify="center"
           align="center"
+          textAlign="center"
           color={textColor2}
+          bg={accentOne}
           position="sticky"
           zIndex="1000"
-          bg={accentTwo}
-          paddingLeft="10px"
-          paddingRight="10px"
           top="0"
           left="0"
-          marginBottom="10px"
         >
-          {titlesArray.map((title, key) => (
-            <Text>{title}</Text>
-          ))}
+          <Text fontSize="2rem" fontWeight="bold">
+            {title}
+          </Text>
         </Flex>
       )}
       {Contents}

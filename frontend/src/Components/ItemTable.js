@@ -17,8 +17,7 @@ import {
   textColor2,
 } from "../themeSettings";
 
-function ItemTable({ updateVariable }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
   const [foods, setFoods] = useState(null);
 
   // Fetch items when the component mounts
@@ -26,12 +25,15 @@ function ItemTable({ updateVariable }) {
     const fetchItems = async () => {
       try {
         const response = await axios.get("http://localhost:8000/items");
-        const sortedFoods = response.data.sort(
-          (foodOne, foodTwo) =>
-            new Date(foodOne.expiration_date) -
-            new Date(foodTwo.expiration_date)
-        );
-        setFoods(sortedFoods);
+        let foodList = response.data;
+        if (foodFilterFunction) {
+          foodList = foodList.filter(foodFilterFunction);
+        }
+        if (foodSorterFunction) {
+          foodList = foodList.sort(foodSorterFunction);
+        }
+
+        setFoods(foodList);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -52,7 +54,11 @@ function ItemTable({ updateVariable }) {
     if (!date) {
       return "No Date";
     } else {
-      return new Date(date).toLocaleDateString();
+      const dateObj = new Date(date);
+      const year = dateObj.getUTCFullYear();
+      const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(dateObj.getUTCDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
   };
 
