@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { accentTwo, textColor1 } from "../themeSettings";
+import { accentOne, accentTwo, textColor1 } from "../themeSettings";
 
 function ModalComponent({ isOpen, onOpen, onClose, content }) {
   return (
@@ -23,7 +23,12 @@ function ModalComponent({ isOpen, onOpen, onClose, content }) {
         position="relative"
       >
         {content}
-        <Button width="100%" onClick={onClose} borderRadius="20px">
+        <Button
+          width="100%"
+          onClick={onClose}
+          borderRadius="20px"
+          bg={accentOne}
+        >
           Close
         </Button>
       </ModalContent>

@@ -5,8 +5,8 @@ import { accentOne, accentTwo, textColor2 } from "../themeSettings";
 function DashboardSection({ title, Contents }) {
   return (
     <Box
-      width={{ base: "80vw", md: "300px" }}
-      height={{ base: "80vw", md: "300px" }}
+      width="300px"
+      height="300px"
       bg={accentOne}
       overflowY="auto" // Enable vertical scrolling
       overflowX="hidden" // Disable horizontal scrolling

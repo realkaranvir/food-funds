@@ -51,7 +51,7 @@ function HomePage() {
                 new Date(foodTwo.expiration_date)
               }
               foodFilterFunction={(food) => {
-                //Only get foods that are expiring within a week
+                //Only get foods that are expiring within timeframe
                 const today = new Date();
                 const expirationDate = new Date(food.expiration_date);
                 const oneWeekFromToday = new Date(today);

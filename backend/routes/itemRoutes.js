@@ -95,7 +95,11 @@ router.get("/amount-spent", async (req, res) => {
       res.status(500).end();
       return;
     } else {
-      res.status(200).json({ cost });
+      if (data.length === 0) {
+        res.status(200).json({});
+      } else {
+        res.status(200).json({ cost });
+      }
     }
   } catch (err) {
     console.error("Error: ", err);

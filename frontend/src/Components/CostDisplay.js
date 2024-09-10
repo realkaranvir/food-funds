@@ -3,6 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import { getStartAndEndOfMonth } from "../Utils";
 import axios from "axios";
 import { CostDisplayTypes } from "../Enums";
+import { accentTwo } from "../themeSettings";
 
 function CostDisplay({ type, updateVariable }) {
   const [amountSpent, setAmountSpent] = useState(null);
@@ -35,6 +36,21 @@ function CostDisplay({ type, updateVariable }) {
 
     fetchAmountSpent();
   }, [updateVariable]);
+
+  if (!amountSpent) {
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        textAlign="center"
+        h="100%"
+        color={accentTwo}
+      >
+        No Data
+      </Flex>
+    );
+  }
+  console.log(amountSpent);
 
   return (
     <Flex

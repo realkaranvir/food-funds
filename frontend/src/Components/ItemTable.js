@@ -15,6 +15,7 @@ import {
   accentOne,
   textColor1,
   textColor2,
+  accentTwo,
 } from "../themeSettings";
 
 function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
@@ -46,6 +47,17 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
     return (
       <Flex justify="center" align="center" width="100%" height="100%">
         <Spinner boxSize="75px" />
+      </Flex>
+    );
+  } else if (foods.length === 0) {
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        textAlign="center"
+        color={accentTwo}
+      >
+        No Data
       </Flex>
     );
   }
