@@ -50,7 +50,6 @@ function CostDisplay({ type, updateVariable }) {
       </Flex>
     );
   }
-  console.log(amountSpent);
 
   return (
     <Flex
