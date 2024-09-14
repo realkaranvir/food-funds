@@ -34,7 +34,6 @@ function AddItem({ updateFunction }) {
   };
 
   const addFood = async (newFood) => {
-    console.log(newFood.expiration_date);
     try {
       const response = await axios.post("http://localhost:8000/items", {
         name: newFood.name,
