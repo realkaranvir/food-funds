@@ -50,6 +50,7 @@ function HomePage() {
               <ItemTable
                 updateVariable={updateDashboard}
                 foodSorterFunction={(foodOne, foodTwo) =>
+                  // Sort from expiring soonest to expiring latest
                   new Date(foodOne.expiration_date) -
                   new Date(foodTwo.expiration_date)
                 }
@@ -62,6 +63,36 @@ function HomePage() {
 
                   return expirationDate <= oneWeekFromToday;
                 }}
+                secondTextDisplayFunc={(food) => {
+                  const date = food.expiration_date;
+                  if (!date) {
+                    return "No Date";
+                  } else {
+                    const dateObj = new Date(date);
+                    const year = dateObj.getUTCFullYear();
+                    const month = String(dateObj.getUTCMonth() + 1).padStart(
+                      2,
+                      "0"
+                    );
+                    const day = String(dateObj.getUTCDate()).padStart(2, "0");
+                    return `Expires: ${year}-${month}-${day}`;
+                  }
+                }}
+              />
+            }
+          />
+          <DashboardSection
+            title="All Foods"
+            Contents={
+              <ItemTable
+                updateVariable={updateDashboard}
+                foodSorterFunction={(foodOne, foodTwo) =>
+                  new Date(foodTwo.date_purchased) -
+                  new Date(foodOne.date_purchased)
+                }
+                secondTextDisplayFunc={(food) =>
+                  `Purchased: ${food.date_purchased}`
+                }
               />
             }
           />

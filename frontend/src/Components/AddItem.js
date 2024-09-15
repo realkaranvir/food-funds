@@ -7,7 +7,12 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { accentOne, textColor2 } from "../themeSettings";
+import {
+  accentOne,
+  textColor2,
+  primaryColor,
+  textColor3,
+} from "../themeSettings";
 
 function AddItem({ updateFunction }) {
   const [foodData, setFoodData] = useState({
@@ -81,97 +86,99 @@ function AddItem({ updateFunction }) {
       spacing={1}
       p={4}
       borderRadius="20px"
+      borderWidth="3px"
       minWidth={{ base: "80vw", md: "300px" }}
-      color={textColor2}
-      bg={accentOne}
+      color={textColor3}
+      bg={primaryColor}
     >
       <FormControl>
+        <FormLabel>Name</FormLabel>
         <Input
           name="name"
-          placeholder="Name"
           value={foodData.name}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Cost</FormLabel>
         <Input
           name="cost"
-          placeholder="Cost"
           value={foodData.cost}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Calories</FormLabel>
         <Input
           name="calories"
-          placeholder="Calories"
           value={foodData.calories}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Protein (g)</FormLabel>
         <Input
           name="protein"
-          placeholder="Protein (g)"
           value={foodData.protein}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Carbohydrates (g)</FormLabel>
         <Input
           name="carbohydrates"
-          placeholder="Carbohydrates (g)"
           value={foodData.carbohydrates}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Fats (g)</FormLabel>
         <Input
           name="fats"
-          placeholder="Fats (g)"
           value={foodData.fats}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
+
       <FormControl>
+        <FormLabel>Servings</FormLabel>
         <Input
           name="servings"
-          placeholder="Servings"
           value={foodData.servings}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
@@ -183,9 +190,9 @@ function AddItem({ updateFunction }) {
           name="expiration_date"
           value={foodData.expiration_date}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
@@ -197,14 +204,21 @@ function AddItem({ updateFunction }) {
           name="date_purchased"
           value={foodData.date_purchased}
           onChange={handleChange}
-          bg={accentOne}
-          color={textColor2}
-          borderColor="Black"
+          bg={primaryColor}
+          color={textColor3}
+          borderColor={accentOne}
           borderRadius="5px"
           required
         />
       </FormControl>
-      <Button bg={accentOne} type="submit">
+      <Button
+        bg={primaryColor}
+        color={textColor3}
+        borderRadius="20px"
+        borderWidth="3px"
+        borderColor={accentOne}
+        type="submit"
+      >
         Add Food
       </Button>
     </VStack>

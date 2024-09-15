@@ -2,10 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { VStack, Spinner, HStack, Text, Flex } from "@chakra-ui/react";
 
-import { primaryColor, textColor1, accentTwo } from "../themeSettings";
+import {
+  primaryColor,
+  textColor1,
+  accentTwo,
+  accentOne,
+  textColor3,
+} from "../themeSettings";
 import { useNavigate } from "react-router-dom";
 
-function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
+function ItemTable({
+  updateVariable,
+  foodFilterFunction,
+  foodSorterFunction,
+  secondTextDisplayFunc,
+}) {
   const [foods, setFoods] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
@@ -39,7 +50,7 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
     };
 
     fetchItems();
-  }, [updateVariable, foodFilterFunction, foodSorterFunction, token]);
+  }, [updateVariable, foodFilterFunction, foodSorterFunction, token, navigate]);
 
   if (foods === null) {
     return (
@@ -60,24 +71,11 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
     );
   }
 
-  const getExpiration = (date) => {
-    if (!date) {
-      return "No Date";
-    } else {
-      const dateObj = new Date(date);
-      const year = dateObj.getUTCFullYear();
-      const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0");
-      const day = String(dateObj.getUTCDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    }
-  };
-
   return (
     <VStack>
       {foods.map((food, key) => (
         <HStack
-          minWidth="200px"
-          maxWidth="200px"
+          width="290px"
           bg={primaryColor}
           padding="4"
           borderRadius="20px"
@@ -87,7 +85,7 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
           cursor="pointer"
         >
           <Text overflow="hidden">{food.name}</Text>
-          <Text>{getExpiration(food.expiration_date)}</Text>
+          <Text color={textColor3}>{secondTextDisplayFunc(food)}</Text>
         </HStack>
       ))}
     </VStack>

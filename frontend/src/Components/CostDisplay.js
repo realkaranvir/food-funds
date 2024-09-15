@@ -22,6 +22,7 @@ function CostDisplay({ type, updateVariable }) {
         endDate = new Date();
         startDate = new Date(endDate.getFullYear(), 1, 1);
       }
+      console.log(startDate, endDate);
       try {
         const response = await axios.get(
           "http://localhost:8000/items/amount-spent",
@@ -39,7 +40,7 @@ function CostDisplay({ type, updateVariable }) {
     };
 
     fetchAmountSpent();
-  }, [updateVariable, type]);
+  }, [updateVariable, type, token]);
 
   if (!amountSpent) {
     return (

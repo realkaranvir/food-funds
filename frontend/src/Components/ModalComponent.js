@@ -1,33 +1,31 @@
 import React, { useState } from "react";
+import { Button, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
 import {
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import { accentOne, accentTwo, textColor1 } from "../themeSettings";
+  accentOne,
+  accentTwo,
+  primaryColor,
+  textColor1,
+  textColor3,
+} from "../themeSettings";
 
 function ModalComponent({ isOpen, onOpen, onClose, content }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent
-        bg="none"
-        justify="center"
-        gap="10px"
-        m={3}
-        position="relative"
-      >
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <ModalOverlay
+        sx={{
+          backdropFilter: "blur(5px)", // Blur the background of the modal
+        }}
+      />
+      <ModalContent bg="none" gap="10px" m={3} boxShadow="none">
         {content}
         <Button
           width="100%"
           onClick={onClose}
           borderRadius="20px"
-          bg={accentOne}
+          borderWidth="3px"
+          borderColor={accentOne}
+          color={textColor3}
+          bg={primaryColor}
         >
           Close
         </Button>
