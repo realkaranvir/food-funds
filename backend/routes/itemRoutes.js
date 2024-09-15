@@ -1,24 +1,57 @@
 import { Router } from "express";
 const router = Router();
 import supabase from "../supabase.js";
+import { verifyToken } from "../jwt.js";
+import jwt from "jsonwebtoken";
 
-router.get("/", async (req, res) => {
-  const { data, error } = await supabase.from("Items").select("*");
+const decodeTokenFromRequest = (req) => {
+  // return the decoded token if it's valid, null otherwise
 
-  if (error) {
-    console.error("Select error: ", error);
-    res.status(500).end();
-  } else {
-    res.status(200).send(data);
+  // Checks if the correct authorization headers are submitted with the request
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return null;
   }
-});
-
-router.get("/amount-spent", async (req, res) => {
-  const { startDate, endDate } = req.query;
   try {
+    const token = authHeader.split(" ")[1]; //Extracts token from the Authorization header
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    return decodedToken;
+  } catch (error) {
+    console.error("JWT error: ", error);
+    return null;
+  }
+};
+
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const decodedToken = decodeTokenFromRequest(req);
+
     const { data, error } = await supabase
       .from("Items")
       .select("*")
+      .eq("user_id", decodedToken.user_id);
+
+    if (error) {
+      console.error("Select error: ", error);
+      return res.status(500).json({ message: "Internal server error" });
+    } else {
+      return res.status(200).send(data);
+    }
+  } catch (err) {
+    console.error("Error fetching items: ", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/amount-spent", verifyToken, async (req, res) => {
+  const { startDate, endDate } = req.query;
+  try {
+    const decodedToken = decodeTokenFromRequest(req);
+
+    const { data, error } = await supabase
+      .from("Items")
+      .select("*")
+      .eq("user_id", decodedToken.user_id)
       .gte("date_purchased", new Date(startDate).toISOString())
       .lte("date_purchased", new Date(endDate).toISOString());
     let cost = 0;
@@ -29,8 +62,7 @@ router.get("/amount-spent", async (req, res) => {
 
     if (error) {
       console.error("Select error: ", error);
-      res.status(500).end();
-      return;
+      return res.status(500).json({ error: "An unexpected error occurred" });
     } else {
       if (data.length === 0) {
         res.status(200).json({});
@@ -39,20 +71,27 @@ router.get("/amount-spent", async (req, res) => {
       }
     }
   } catch (err) {
-    console.error("Error: ", err);
+    console.error("Error getting amount spent: ", err);
     res.status(500).json({ error: "An unexpected error occurred" });
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const foodItem = req.body;
-  const { error } = await supabase.from("Items").insert(foodItem);
+  try {
+    const decodedToken = decodeTokenFromRequest(req);
+    foodItem.user_id = decodedToken.user_id;
 
-  if (error) {
-    res.status(500).end();
-  } else {
-    res.status(200).end();
-    console.log("Successfully inserted data: ", foodItem);
+    const { error } = await supabase.from("Items").insert(foodItem);
+
+    if (error) {
+      console.error("Error inserting data: ", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    return res.status(200).json({ message: "Successfully inserted data" });
+  } catch (err) {
+    console.error("Error processing request:", err);
+    return res.status(500).json({ error: "An internal server error occurred" });
   }
 });
 

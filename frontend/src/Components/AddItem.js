@@ -7,13 +7,7 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import {
-  accentOne,
-  accentTwo,
-  primaryColor,
-  textColor1,
-  textColor2,
-} from "../themeSettings";
+import { accentOne, textColor2 } from "../themeSettings";
 
 function AddItem({ updateFunction }) {
   const [foodData, setFoodData] = useState({
@@ -28,6 +22,8 @@ function AddItem({ updateFunction }) {
     date_purchased: "",
   });
 
+  const token = localStorage.getItem("authToken");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFoodData({ ...foodData, [name]: value });
@@ -35,17 +31,25 @@ function AddItem({ updateFunction }) {
 
   const addFood = async (newFood) => {
     try {
-      const response = await axios.post("http://localhost:8000/items", {
-        name: newFood.name,
-        cost: parseFloat(newFood.cost),
-        calories: parseInt(newFood.calories),
-        protein: parseInt(newFood.protein),
-        carbohydrates: parseInt(newFood.carbohydrates),
-        fats: parseInt(newFood.fats),
-        servings: parseInt(newFood.servings),
-        expiration_date: newFood.expiration_date,
-        date_purchased: newFood.date_purchased,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/items",
+        {
+          name: newFood.name,
+          cost: parseFloat(newFood.cost),
+          calories: parseInt(newFood.calories),
+          protein: parseInt(newFood.protein),
+          carbohydrates: parseInt(newFood.carbohydrates),
+          fats: parseInt(newFood.fats),
+          servings: parseInt(newFood.servings),
+          expiration_date: newFood.expiration_date,
+          date_purchased: newFood.date_purchased,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       console.log("error posting");
     }

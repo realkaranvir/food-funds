@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  VStack,
-  Box,
-  Spinner,
-  HStack,
-  Text,
-  Flex,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { VStack, Spinner, HStack, Text, Flex } from "@chakra-ui/react";
 
-import {
-  primaryColor,
-  accentOne,
-  textColor1,
-  textColor2,
-  accentTwo,
-} from "../themeSettings";
+import { primaryColor, textColor1, accentTwo } from "../themeSettings";
+import { useNavigate } from "react-router-dom";
 
 function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
   const [foods, setFoods] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
 
   // Fetch items when the component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/items");
+        const response = await axios.get("http://localhost:8000/items", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         let foodList = response.data;
         if (foodFilterFunction) {
           foodList = foodList.filter(foodFilterFunction);
@@ -37,11 +30,16 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
         setFoods(foodList);
       } catch (error) {
         console.error("Error fetching items:", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/login");
+        } else {
+          console.error("an unexpected error occurred: ", error);
+        }
       }
     };
 
     fetchItems();
-  }, [updateVariable]);
+  }, [updateVariable, foodFilterFunction, foodSorterFunction, token]);
 
   if (foods === null) {
     return (
@@ -78,8 +76,8 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
     <VStack>
       {foods.map((food, key) => (
         <HStack
-          width={{ base: "70vw", md: "280px" }}
-          height={{ base: "10vw", md: "35px" }}
+          minWidth="200px"
+          maxWidth="200px"
           bg={primaryColor}
           padding="4"
           borderRadius="20px"
@@ -88,7 +86,7 @@ function ItemTable({ updateVariable, foodFilterFunction, foodSorterFunction }) {
           color={textColor1}
           cursor="pointer"
         >
-          <Text>{food.name}</Text>
+          <Text overflow="hidden">{food.name}</Text>
           <Text>{getExpiration(food.expiration_date)}</Text>
         </HStack>
       ))}

@@ -7,6 +7,7 @@ import { accentTwo } from "../themeSettings";
 
 function CostDisplay({ type, updateVariable }) {
   const [amountSpent, setAmountSpent] = useState(null);
+  const token = localStorage.getItem("authToken");
 
   // Fetch items when the component mounts
   useEffect(() => {
@@ -26,6 +27,9 @@ function CostDisplay({ type, updateVariable }) {
           "http://localhost:8000/items/amount-spent",
           {
             params: { startDate, endDate },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setAmountSpent(response.data.cost);
@@ -35,7 +39,7 @@ function CostDisplay({ type, updateVariable }) {
     };
 
     fetchAmountSpent();
-  }, [updateVariable]);
+  }, [updateVariable, type]);
 
   if (!amountSpent) {
     return (
