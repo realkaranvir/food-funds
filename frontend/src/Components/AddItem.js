@@ -14,7 +14,7 @@ import {
   textColor3,
 } from "../themeSettings";
 
-function AddItem({ updateFunction }) {
+function AddItem({ updateFunction, food }) {
   const [foodData, setFoodData] = useState({
     name: "",
     cost: "",
@@ -27,6 +27,11 @@ function AddItem({ updateFunction }) {
     date_purchased: "",
   });
 
+  if (food) {
+    // If an item is already passed in, use that to fill in form for editing
+    setFoodData(food);
+  }
+
   const token = localStorage.getItem("authToken");
 
   const handleChange = (e) => {
@@ -34,27 +39,50 @@ function AddItem({ updateFunction }) {
     setFoodData({ ...foodData, [name]: value });
   };
 
-  const addFood = async (newFood) => {
+  const addFood = async (foodItem) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/items",
-        {
-          name: newFood.name,
-          cost: parseFloat(newFood.cost),
-          calories: parseInt(newFood.calories),
-          protein: parseInt(newFood.protein),
-          carbohydrates: parseInt(newFood.carbohydrates),
-          fats: parseInt(newFood.fats),
-          servings: parseInt(newFood.servings),
-          expiration_date: newFood.expiration_date,
-          date_purchased: newFood.date_purchased,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      if (food) {
+        const response = await axios.put(
+          "http://localhost:8000/items",
+          {
+            name: foodItem.name,
+            cost: parseFloat(foodItem.cost),
+            calories: parseInt(foodItem.calories),
+            protein: parseInt(foodItem.protein),
+            carbohydrates: parseInt(foodItem.carbohydrates),
+            fats: parseInt(foodItem.fats),
+            servings: parseInt(foodItem.servings),
+            expiration_date: foodItem.expiration_date,
+            date_purchased: foodItem.date_purchased,
+            id: foodItem.id,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } else {
+        const response = await axios.post(
+          "http://localhost:8000/items",
+          {
+            name: foodItem.name,
+            cost: parseFloat(foodItem.cost),
+            calories: parseInt(foodItem.calories),
+            protein: parseInt(foodItem.protein),
+            carbohydrates: parseInt(foodItem.carbohydrates),
+            fats: parseInt(foodItem.fats),
+            servings: parseInt(foodItem.servings),
+            expiration_date: foodItem.expiration_date,
+            date_purchased: foodItem.date_purchased,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
     } catch (error) {
       console.log("error posting");
     }

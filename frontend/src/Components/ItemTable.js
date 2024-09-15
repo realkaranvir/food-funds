@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { VStack, Spinner, HStack, Text, Flex } from "@chakra-ui/react";
+import {
+  VStack,
+  Spinner,
+  HStack,
+  Text,
+  Flex,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 import {
   primaryColor,
@@ -10,15 +17,19 @@ import {
   textColor3,
 } from "../themeSettings";
 import { useNavigate } from "react-router-dom";
+import ModalComponent from "./ModalComponent";
+import AddItem from "./AddItem";
 
 function ItemTable({
   updateVariable,
   foodFilterFunction,
   foodSorterFunction,
   secondTextDisplayFunc,
+  updateDashboardFunction,
 }) {
   const [foods, setFoods] = useState(null);
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const token = localStorage.getItem("authToken");
 
   // Fetch items when the component mounts
@@ -74,19 +85,33 @@ function ItemTable({
   return (
     <VStack>
       {foods.map((food, key) => (
-        <HStack
-          width="290px"
-          bg={primaryColor}
-          padding="4"
-          borderRadius="20px"
-          justify="space-between"
-          key={key}
-          color={textColor1}
-          cursor="pointer"
-        >
-          <Text overflow="hidden">{food.name}</Text>
-          <Text color={textColor3}>{secondTextDisplayFunc(food)}</Text>
-        </HStack>
+        <>
+          <HStack
+            width="270px"
+            bg={primaryColor}
+            padding="4"
+            borderRadius="20px"
+            justify="space-between"
+            key={key}
+            color={textColor1}
+            cursor="pointer"
+            onClick={onOpen}
+          >
+            <Text overflow="hidden">{food.name}</Text>
+            <Text color={textColor3}>{secondTextDisplayFunc(food)}</Text>
+          </HStack>
+          <ModalComponent
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            content={
+              <AddItem
+                updateFunction={updateDashboardFunction}
+                foodItem={food}
+              />
+            }
+          />
+        </>
       ))}
     </VStack>
   );

@@ -28,15 +28,15 @@ function HomePage() {
   const [timeframe, setTimeFrame] = useState(7); //Timeframe for Expiring Soon list
 
   return (
-    <>
+    <VStack height="100vh">
       <Navbar />
       <Flex
-        align={{ base: "center", md: "" }}
+        align="center"
         justify="center"
         direction={{ base: "column", md: "row" }}
         gap="20px"
         p={2}
-        minHeight="100vh"
+        flex="1"
       >
         <Flex
           justify="center"
@@ -49,13 +49,14 @@ function HomePage() {
             Contents={
               <ItemTable
                 updateVariable={updateDashboard}
+                updateDashboardFunction={setUpdateDashboard}
                 foodSorterFunction={(foodOne, foodTwo) =>
                   // Sort from expiring soonest to expiring latest
                   new Date(foodOne.expiration_date) -
                   new Date(foodTwo.expiration_date)
                 }
                 foodFilterFunction={(food) => {
-                  //Only get foods that are expiring within timeframe
+                  // Only get foods that are expiring within timeframe
                   const today = new Date();
                   const expirationDate = new Date(food.expiration_date);
                   const oneWeekFromToday = new Date(today);
@@ -86,6 +87,7 @@ function HomePage() {
             Contents={
               <ItemTable
                 updateVariable={updateDashboard}
+                updateDashboardFunction={setUpdateDashboard}
                 foodSorterFunction={(foodOne, foodTwo) =>
                   new Date(foodTwo.date_purchased) -
                   new Date(foodOne.date_purchased)
@@ -124,7 +126,7 @@ function HomePage() {
           <AddIcon />
         </Button>
       </Flex>
-    </>
+    </VStack>
   );
 }
 

@@ -21,7 +21,7 @@ function DashboardSection({ title, Contents }) {
           color={textColor2}
           bg={accentOne}
           position="sticky"
-          zIndex="1000"
+          zIndex="999"
           top="0"
           left="0"
         >

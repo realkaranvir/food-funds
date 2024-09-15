@@ -11,7 +11,7 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import { textColor1 } from "../themeSettings";
-import logo from "../Assets/logo.png";
+import logo from "../Assets/logo_white.png";
 import { LoginPageModes } from "../Enums";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
