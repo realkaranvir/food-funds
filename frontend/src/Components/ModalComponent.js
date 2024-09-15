@@ -1,12 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
-import {
-  accentOne,
-  accentTwo,
-  primaryColor,
-  textColor1,
-  textColor3,
-} from "../themeSettings";
+import { accentOne, primaryColor, textColor3 } from "../themeSettings";
 
 function ModalComponent({ isOpen, onOpen, onClose, content }) {
   return (

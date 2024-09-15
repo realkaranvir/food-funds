@@ -1,13 +1,7 @@
 import React from "react";
 import logo from "../Assets/logo_black.png";
 import { Img, Flex, Text } from "@chakra-ui/react";
-import {
-  accentOne,
-  accentTwo,
-  primaryColor,
-  textColor2,
-  textColor3,
-} from "../themeSettings";
+import { accentOne } from "../themeSettings";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {

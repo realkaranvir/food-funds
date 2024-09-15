@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { accentOne, accentTwo, textColor2 } from "../themeSettings";
+import { accentOne, textColor2 } from "../themeSettings";
 
 function DashboardSection({ title, Contents }) {
   return (

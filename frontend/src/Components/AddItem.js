@@ -7,12 +7,7 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import {
-  accentOne,
-  textColor2,
-  primaryColor,
-  textColor3,
-} from "../themeSettings";
+import { accentOne, primaryColor, textColor3 } from "../themeSettings";
 
 function AddItem({ updateFunction, food }) {
   const [foodData, setFoodData] = useState({
@@ -42,7 +37,7 @@ function AddItem({ updateFunction, food }) {
   const addFood = async (foodItem) => {
     try {
       if (food) {
-        const response = await axios.put(
+        await axios.put(
           "http://localhost:8000/items",
           {
             name: foodItem.name,
@@ -63,7 +58,7 @@ function AddItem({ updateFunction, food }) {
           }
         );
       } else {
-        const response = await axios.post(
+        await axios.post(
           "http://localhost:8000/items",
           {
             name: foodItem.name,

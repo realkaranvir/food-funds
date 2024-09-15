@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import ItemTable from "../Components/ItemTable";
 import AddItem from "../Components/AddItem";
-import { AddIcon, SettingsIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import { CostDisplayTypes } from "../Enums";
-import {
-  Box,
-  VStack,
-  Text,
-  Flex,
-  HStack,
-  Button,
-  useDisclosure,
-  Select,
-} from "@chakra-ui/react";
+import { VStack, Flex, Button, useDisclosure } from "@chakra-ui/react";
 import DashboardSection from "../Components/DashboardSection";
-import { primaryColor } from "../themeSettings";
 import CostDisplay from "../Components/CostDisplay";
 import ModalComponent from "../Components/ModalComponent";
 import Navbar from "../Components/Navbar";
@@ -25,7 +15,7 @@ function HomePage() {
   const updateDashboardFunction = () => {
     setUpdateDashboard(!updateDashboard);
   };
-  const [timeframe, setTimeFrame] = useState(7); //Timeframe for Expiring Soon list
+  const timeframe = 7;
 
   return (
     <VStack height="100vh">

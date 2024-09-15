@@ -13,7 +13,6 @@ import {
   primaryColor,
   textColor1,
   accentTwo,
-  accentOne,
   textColor3,
 } from "../themeSettings";
 import { useNavigate } from "react-router-dom";
