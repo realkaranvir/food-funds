@@ -4,7 +4,7 @@
   "main": "backend/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "start": "node backend/index.js"
+    "start": "echo -e \"\\n\\nStarting server\\n\\n\" && node backend/index.js"
   },
   "author": "",
   "license": "ISC",
