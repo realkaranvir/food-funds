@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const supabase = require("../supabase.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { signToken, verifyToken } = require("../jwt.js");
 
 router.post("/signup", async (req, res) => {
