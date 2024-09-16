@@ -43,7 +43,7 @@ function Login() {
   const handleSignup = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/users/signup",
+        `${process.env.REACT_APP_BACKEND_LINK}/users/signup`,
         formData
       );
       saveToken(response.data.token);
@@ -56,7 +56,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/users/login",
+        `${process.env.REACT_APP_BACKEND_LINK}/users/login`,
         formData
       );
       saveToken(response.data.token);

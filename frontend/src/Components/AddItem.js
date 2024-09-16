@@ -38,7 +38,7 @@ function AddItem({ updateFunction, food }) {
     try {
       if (food) {
         await axios.put(
-          "http://localhost:8000/items",
+          `${process.env.REACT_APP_BACKEND_LINK}/items`,
           {
             name: foodItem.name,
             cost: parseFloat(foodItem.cost),
@@ -59,7 +59,7 @@ function AddItem({ updateFunction, food }) {
         );
       } else {
         await axios.post(
-          "http://localhost:8000/items",
+          `${process.env.REACT_APP_BACKEND_LINK}/items`,
           {
             name: foodItem.name,
             cost: parseFloat(foodItem.cost),

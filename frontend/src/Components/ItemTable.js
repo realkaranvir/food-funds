@@ -35,11 +35,14 @@ function ItemTable({
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/items", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_LINK}/items`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         let foodList = response.data;
         if (foodFilterFunction) {
           foodList = foodList.filter(foodFilterFunction);
