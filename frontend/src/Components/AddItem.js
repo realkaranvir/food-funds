@@ -35,6 +35,7 @@ function AddItem({ updateFunction, food }) {
   };
 
   const addFood = async (foodItem) => {
+    // If a food is passed in, modify existing item backend, else create new food item
     try {
       if (food) {
         await axios.put(
