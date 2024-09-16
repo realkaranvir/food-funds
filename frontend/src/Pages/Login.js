@@ -49,7 +49,7 @@ function Login() {
       saveToken(response.data.token);
       navigate("/");
     } catch (error) {
-      console.log("Error signing up: ", error);
+      console.error("Error signing up: ", error);
     }
   };
 
@@ -62,7 +62,7 @@ function Login() {
       saveToken(response.data.token);
       navigate("/");
     } catch (error) {
-      console.log("Error logging in: ", error);
+      console.error("Error logging in: ", error);
     }
   };
 

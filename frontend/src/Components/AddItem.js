@@ -80,7 +80,7 @@ function AddItem({ updateFunction, food }) {
         );
       }
     } catch (error) {
-      console.log("error posting");
+      console.error("error posting: ", error);
     }
   };
 
