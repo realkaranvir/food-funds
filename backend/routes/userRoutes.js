@@ -1,8 +1,8 @@
-import { Router } from "express";
+const { Router } = require("express");
 const router = Router();
-import supabase from "../supabase.js";
-import bcrypt from "bcrypt";
-import { signToken, verifyToken } from "../jwt.js";
+const supabase = require("../supabase.js");
+const bcrypt = require("bcrypt");
+const { signToken, verifyToken } = require("../jwt.js");
 
 router.post("/signup", async (req, res) => {
   const { username, password, name, email_address } = req.body;
@@ -91,4 +91,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

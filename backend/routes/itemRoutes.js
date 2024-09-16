@@ -1,8 +1,8 @@
-import { Router } from "express";
+const { Router } = require("express");
 const router = Router();
-import supabase from "../supabase.js";
-import { verifyToken } from "../jwt.js";
-import jwt from "jsonwebtoken";
+const supabase = require("../supabase.js");
+const { verifyToken } = require("../jwt.js");
+const jwt = require("jsonwebtoken");
 
 const decodeTokenFromRequest = (req) => {
   // return the decoded token if it's valid, null otherwise
@@ -95,4 +95,4 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
 const secretKey = process.env.JWT_SECRET;
 
-export const verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
 
   if (!token) {
@@ -28,8 +28,13 @@ export const verifyToken = (req, res, next) => {
  * @returns {String} - The signed JWT token
  */
 
-export const signToken = (payload, expiresIn) => {
+const signToken = (payload, expiresIn) => {
   // Sign the token using the payload and secret key
   const token = jwt.sign(payload, secretKey, { expiresIn });
   return token;
+};
+
+module.exports = {
+  verifyToken,
+  signToken,
 };

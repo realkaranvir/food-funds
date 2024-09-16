@@ -1,10 +1,11 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
-import express, { json } from "express";
-import itemRoutes from "./routes/itemRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import cors from "cors";
+const express = require("express");
+const { json } = require("express");
+const itemRoutes = require("./routes/itemRoutes.js");
+const userRoutes = require("./routes/userRoutes.js");
+const cors = require("cors");
 
 const app = express();
 const PORT = 8000;
