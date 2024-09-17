@@ -26,6 +26,8 @@ jobs:
           cd frontend
           npm install
           npm run build
+      - name: Debug Environment Variables
+        run: env
 
   deploy_job:
     needs: build_job
