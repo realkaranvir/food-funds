@@ -20,7 +20,7 @@ jobs:
           submodules: true
           lfs: false
       - name: Print Environment Variable
-        run: echo "REACT_APP_BACKEND_LINK is ${{ secrets.REACT_APP_BACKEND_LINK }}"
+        run: echo "REACT_APP_BACKEND_LINK is $(REACT_APP_BACKEND_LINK)"
       - name: Build App
         env:
           REACT_APP_BACKEND_LINK: $(REACT_APP_BACKEND_LINK)
