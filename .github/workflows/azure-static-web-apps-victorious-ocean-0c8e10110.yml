@@ -23,7 +23,7 @@ jobs:
         run: echo "REACT_APP_BACKEND_LINK is ${{ secrets.REACT_APP_BACKEND_LINK }}"
       - name: Build App
         env:
-          REACT_APP_BACKEND_LINK: ${{ secrets.REACT_APP_BACKEND_LINK }}
+          REACT_APP_BACKEND_LINK: $(REACT_APP_BACKEND_LINK)
         run: |
           cd frontend
           npm install
