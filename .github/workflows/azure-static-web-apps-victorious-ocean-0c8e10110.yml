@@ -19,6 +19,8 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Print Environment Variable
+        run: echo "REACT_APP_BACKEND_LINK is ${{ secrets.REACT_APP_BACKEND_LINK }}"
       - name: Build App
         env:
           REACT_APP_BACKEND_LINK: ${{ secrets.REACT_APP_BACKEND_LINK }}
@@ -26,8 +28,6 @@ jobs:
           cd frontend
           npm install
           npm run build
-      - name: Debug Environment Variables
-        run: env
 
   deploy_job:
     needs: build_job
