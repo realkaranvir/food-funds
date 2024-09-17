@@ -111,13 +111,15 @@ function AddItem({ updateFunction, food }) {
       p={4}
       borderRadius="20px"
       borderWidth="3px"
-      minWidth={{ base: "80vw", md: "300px" }}
+      minWidth="300px"
       color={textColor3}
       bg={primaryColor}
+      fontSize="0.5rem"
     >
       <FormControl>
         <FormLabel>Name</FormLabel>
         <Input
+          height="25px"
           name="name"
           value={foodData.name}
           onChange={handleChange}
@@ -131,6 +133,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Cost</FormLabel>
         <Input
+          height="25px"
           name="cost"
           value={foodData.cost}
           onChange={handleChange}
@@ -144,6 +147,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Calories</FormLabel>
         <Input
+          height="25px"
           name="calories"
           value={foodData.calories}
           onChange={handleChange}
@@ -157,6 +161,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Protein (g)</FormLabel>
         <Input
+          height="25px"
           name="protein"
           value={foodData.protein}
           onChange={handleChange}
@@ -170,6 +175,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Carbohydrates (g)</FormLabel>
         <Input
+          height="25px"
           name="carbohydrates"
           value={foodData.carbohydrates}
           onChange={handleChange}
@@ -183,6 +189,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Fats (g)</FormLabel>
         <Input
+          height="25px"
           name="fats"
           value={foodData.fats}
           onChange={handleChange}
@@ -197,6 +204,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Servings</FormLabel>
         <Input
+          height="25px"
           name="servings"
           value={foodData.servings}
           onChange={handleChange}
@@ -210,6 +218,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Expiration Date</FormLabel>
         <Input
+          height="25px"
           type="date"
           name="expiration_date"
           value={foodData.expiration_date}
@@ -224,6 +233,7 @@ function AddItem({ updateFunction, food }) {
       <FormControl>
         <FormLabel>Purchase Date</FormLabel>
         <Input
+          height="25px"
           type="date"
           name="date_purchased"
           value={foodData.date_purchased}

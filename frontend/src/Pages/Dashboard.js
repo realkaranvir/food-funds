@@ -18,7 +18,7 @@ function HomePage() {
   const timeframe = 7;
 
   return (
-    <VStack height="100vh">
+    <VStack minHeight="100vh">
       <Navbar />
       <Flex
         align="center"

@@ -87,7 +87,7 @@ function ItemTable({
   return (
     <VStack>
       {foods.map((food, key) => (
-        <>
+        <div key={key}>
           <HStack
             width="270px"
             bg={primaryColor}
@@ -113,7 +113,7 @@ function ItemTable({
               />
             }
           />
-        </>
+        </div>
       ))}
     </VStack>
   );
