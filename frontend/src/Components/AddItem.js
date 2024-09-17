@@ -7,7 +7,12 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { accentOne, primaryColor, textColor3 } from "../themeSettings";
+import {
+  accentOne,
+  accentTwo,
+  primaryColor,
+  textColor3,
+} from "../themeSettings";
 
 function AddItem({ updateFunction, food }) {
   const [foodData, setFoodData] = useState({
@@ -117,7 +122,7 @@ function AddItem({ updateFunction, food }) {
       fontSize="0.5rem"
     >
       <FormControl>
-        <FormLabel>Name</FormLabel>
+        <FormLabel fontSize="0.8rem">Name</FormLabel>
         <Input
           height="25px"
           name="name"
@@ -131,7 +136,7 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Cost</FormLabel>
+        <FormLabel fontSize="0.8rem">Cost</FormLabel>
         <Input
           height="25px"
           name="cost"
@@ -145,7 +150,7 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Calories</FormLabel>
+        <FormLabel fontSize="0.8rem">Calories</FormLabel>
         <Input
           height="25px"
           name="calories"
@@ -159,7 +164,7 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Protein (g)</FormLabel>
+        <FormLabel fontSize="0.8rem">Protein (g)</FormLabel>
         <Input
           height="25px"
           name="protein"
@@ -173,7 +178,7 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Carbohydrates (g)</FormLabel>
+        <FormLabel fontSize="0.8rem">Carbohydrates (g)</FormLabel>
         <Input
           height="25px"
           name="carbohydrates"
@@ -187,7 +192,7 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Fats (g)</FormLabel>
+        <FormLabel fontSize="0.8rem">Fats (g)</FormLabel>
         <Input
           height="25px"
           name="fats"
@@ -202,7 +207,7 @@ function AddItem({ updateFunction, food }) {
       </FormControl>
 
       <FormControl>
-        <FormLabel>Servings</FormLabel>
+        <FormLabel fontSize="0.8rem">Servings</FormLabel>
         <Input
           height="25px"
           name="servings"
@@ -216,14 +221,14 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Expiration Date</FormLabel>
+        <FormLabel fontSize="0.8rem">Expiration Date</FormLabel>
         <Input
           height="25px"
           type="date"
           name="expiration_date"
           value={foodData.expiration_date}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentTwo}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -231,14 +236,14 @@ function AddItem({ updateFunction, food }) {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Purchase Date</FormLabel>
+        <FormLabel fontSize="0.8rem">Purchase Date</FormLabel>
         <Input
           height="25px"
           type="date"
           name="date_purchased"
           value={foodData.date_purchased}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentTwo}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -252,6 +257,7 @@ function AddItem({ updateFunction, food }) {
         borderWidth="3px"
         borderColor={accentOne}
         type="submit"
+        fontSize="0.8rem"
       >
         Add Food
       </Button>
