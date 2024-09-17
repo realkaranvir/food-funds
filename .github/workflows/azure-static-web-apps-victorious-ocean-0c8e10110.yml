@@ -20,12 +20,12 @@ jobs:
           submodules: true
           lfs: false
       - name: Build App
+        env:
+          REACT_APP_BACKEND_LINK: ${{ secrets.REACT_APP_BACKEND_LINK }}
         run: |
           cd frontend
           npm install
           npm run build
-    env:
-      REACT_APP_BACKEND_LINK: ${{ secrets.REACT_APP_BACKEND_LINK }}
 
   deploy_job:
     needs: build_job
