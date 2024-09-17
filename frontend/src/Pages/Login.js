@@ -55,6 +55,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
+      console.log(process.env.REACT_APP_BACKEND_LINK);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_LINK}/users/login`,
         formData
