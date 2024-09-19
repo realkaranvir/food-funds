@@ -92,7 +92,6 @@ function ItemTable({
             width="270px"
             bg={primaryColor}
             padding="4"
-            borderRadius="20px"
             justify="space-between"
             key={key}
             color={textColor1}

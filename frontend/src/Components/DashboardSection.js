@@ -10,7 +10,6 @@ function DashboardSection({ title, Contents }) {
       bg={accentOne}
       overflowY="auto" // Enable vertical scrolling
       overflowX="hidden" // Disable horizontal scrolling
-      borderRadius="20px"
       position="relative"
     >
       {title && (
