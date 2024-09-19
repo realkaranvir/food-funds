@@ -15,7 +15,7 @@ function ModalComponent({ isOpen, onOpen, onClose, content }) {
         <Button
           width="100%"
           onClick={onClose}
-          borderRadius="20px"
+          borderRadius="0"
           borderWidth="3px"
           borderColor={accentOne}
           color={textColor3}

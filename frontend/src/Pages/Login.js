@@ -7,10 +7,16 @@ import {
   Button,
   InputGroup,
   Img,
+  Spinner,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
-import { textColor1 } from "../themeSettings";
+import {
+  accentOne,
+  primaryColor,
+  textColor1,
+  textColor3,
+} from "../themeSettings";
 import logo from "../Assets/logo_white.png";
 import { LoginPageModes } from "../Enums";
 import axios from "axios";
@@ -18,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { isTokenValid } from "../Utils";
 
 function Login() {
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginMode, setLoginMode] = useState(LoginPageModes.LOG_IN);
   const [formData, setFormData] = useState({
@@ -42,6 +49,7 @@ function Login() {
 
   const handleSignup = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_LINK}/users/signup`,
         formData
@@ -49,13 +57,14 @@ function Login() {
       saveToken(response.data.token);
       navigate("/");
     } catch (error) {
+      setIsLoading(false);
       console.error("Error signing up: ", error);
     }
   };
 
   const handleLogin = async () => {
     try {
-      console.log(process.env.REACT_APP_BACKEND_LINK);
+      setIsLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_LINK}/users/login`,
         formData
@@ -63,6 +72,7 @@ function Login() {
       saveToken(response.data.token);
       navigate("/");
     } catch (error) {
+      setIsLoading(false);
       console.error("Error logging in: ", error);
     }
   };
@@ -75,6 +85,22 @@ function Login() {
       [name]: value,
     }));
   };
+
+  if (isLoading) {
+    // Display loading spinner while loading
+    return (
+      <VStack
+        width="100vw"
+        height="100vh"
+        align="center"
+        justify="center"
+        textAlign="center"
+      >
+        <Text color={textColor3}> Logging you in...</Text>
+        <Spinner color={textColor3} boxSize="75px" />
+      </VStack>
+    );
+  }
 
   return (
     <VStack justify="center" align="center" minHeight="100vh" gap="50px">
@@ -132,7 +158,16 @@ function Login() {
         {loginMode === LoginPageModes.LOG_IN && (
           // If in login mode
           <>
-            <Button onClick={handleLogin}>Log in</Button>
+            <Button
+              bg={primaryColor}
+              color={textColor3}
+              borderRadius="0"
+              borderWidth="3px"
+              borderColor={accentOne}
+              onClick={handleLogin}
+            >
+              Log in
+            </Button>
             <Text
               align="center"
               onClick={() => {
@@ -174,7 +209,16 @@ function Login() {
               onChange={handleChange}
             />
 
-            <Button onClick={handleSignup}>Sign Up</Button>
+            <Button
+              bg={primaryColor}
+              color={textColor3}
+              borderRadius="0"
+              borderWidth="3px"
+              borderColor={accentOne}
+              onClick={handleSignup}
+            >
+              Sign Up
+            </Button>
           </>
         )}
         {loginMode === LoginPageModes.SIGN_UP && (

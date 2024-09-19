@@ -106,10 +106,7 @@ function ItemTable({
             onOpen={onOpen}
             onClose={onClose}
             content={
-              <AddItem
-                updateFunction={updateDashboardFunction}
-                foodItem={food}
-              />
+              <AddItem updateFunction={updateDashboardFunction} food={food} />
             }
           />
         </div>

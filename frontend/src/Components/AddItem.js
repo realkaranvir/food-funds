@@ -7,30 +7,24 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import {
-  accentOne,
-  accentTwo,
-  primaryColor,
-  textColor3,
-} from "../themeSettings";
+import { accentOne, primaryColor, textColor3 } from "../themeSettings";
 
 function AddItem({ updateFunction, food }) {
-  const [foodData, setFoodData] = useState({
-    name: "",
-    cost: "",
-    calories: "",
-    protein: "",
-    carbohydrates: "",
-    fats: "",
-    servings: "",
-    expiration_date: "",
-    date_purchased: "",
-  });
-
-  if (food) {
-    // If an item is already passed in, use that to fill in form for editing
-    setFoodData(food);
-  }
+  const [foodData, setFoodData] = useState(
+    food
+      ? food
+      : {
+          name: "",
+          cost: "",
+          calories: "",
+          protein: "",
+          carbohydrates: "",
+          fats: "",
+          servings: "",
+          expiration_date: "",
+          date_purchased: "",
+        }
+  );
 
   const token = localStorage.getItem("authToken");
 
@@ -114,8 +108,8 @@ function AddItem({ updateFunction, food }) {
       onSubmit={handleSubmit}
       spacing={1}
       p={4}
-      borderRadius="20px"
       borderWidth="3px"
+      borderColor={accentOne}
       minWidth="300px"
       color={textColor3}
       bg={primaryColor}
@@ -128,7 +122,7 @@ function AddItem({ updateFunction, food }) {
           name="name"
           value={foodData.name}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -142,7 +136,7 @@ function AddItem({ updateFunction, food }) {
           name="cost"
           value={foodData.cost}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -156,7 +150,7 @@ function AddItem({ updateFunction, food }) {
           name="calories"
           value={foodData.calories}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -170,7 +164,7 @@ function AddItem({ updateFunction, food }) {
           name="protein"
           value={foodData.protein}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -184,7 +178,7 @@ function AddItem({ updateFunction, food }) {
           name="carbohydrates"
           value={foodData.carbohydrates}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -198,7 +192,7 @@ function AddItem({ updateFunction, food }) {
           name="fats"
           value={foodData.fats}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -213,7 +207,7 @@ function AddItem({ updateFunction, food }) {
           name="servings"
           value={foodData.servings}
           onChange={handleChange}
-          bg={primaryColor}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -228,7 +222,7 @@ function AddItem({ updateFunction, food }) {
           name="expiration_date"
           value={foodData.expiration_date}
           onChange={handleChange}
-          bg={accentTwo}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -243,7 +237,7 @@ function AddItem({ updateFunction, food }) {
           name="date_purchased"
           value={foodData.date_purchased}
           onChange={handleChange}
-          bg={accentTwo}
+          bg={accentOne}
           color={textColor3}
           borderColor={accentOne}
           borderRadius="5px"
@@ -253,7 +247,7 @@ function AddItem({ updateFunction, food }) {
       <Button
         bg={primaryColor}
         color={textColor3}
-        borderRadius="20px"
+        borderRadius="0"
         borderWidth="3px"
         borderColor={accentOne}
         type="submit"
