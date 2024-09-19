@@ -3,7 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import { getStartAndEndOfMonth } from "../Utils";
 import axios from "axios";
 import { CostDisplayTypes } from "../Enums";
-import { accentTwo } from "../themeSettings";
+import { accentTwo, textColor2 } from "../themeSettings";
 
 function CostDisplay({ type, updateVariable }) {
   const [amountSpent, setAmountSpent] = useState(null);
@@ -63,6 +63,7 @@ function CostDisplay({ type, updateVariable }) {
       height="100%"
       textAlign="center"
       p={3}
+      color={textColor2}
     >
       {type === CostDisplayTypes.SUM_LAST_MONTH && (
         <Text fontSize="2rem" fontWeight="bold">
