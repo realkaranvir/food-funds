@@ -9,12 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import {
-  primaryColor,
-  textColor1,
-  accentTwo,
-  textColor3,
-} from "../themeSettings";
+import { textColor1, accentTwo, textColor3 } from "../themeSettings";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "./ModalComponent";
 import AddItem from "./AddItem";
@@ -90,7 +85,7 @@ function ItemTable({
         <div key={key}>
           <HStack
             width="270px"
-            bg={primaryColor}
+            bg={accentTwo}
             padding="4"
             justify="space-between"
             key={key}
