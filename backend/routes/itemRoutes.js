@@ -3,7 +3,6 @@ const router = Router();
 const supabase = require("../supabase.js");
 const { verifyToken } = require("../jwt.js");
 const jwt = require("jsonwebtoken");
-const { check, validationResult } = require("express-validator");
 
 const decodeTokenFromRequest = (req) => {
   // return the decoded token if it's valid, null otherwise
@@ -44,89 +43,56 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-router.get(
-  "/amount-spent",
-  [
-    verifyToken,
-    check("startDate").isISO8601().withMessage("Invalid startDate format"),
-    check("endDate").isISO8601().withMessage("Invalid endDate format"),
-  ],
-  async (req, res) => {
-    // Sanitize inputs check
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.get("/amount-spent", verifyToken, async (req, res) => {
+  const { startDate, endDate } = req.query;
+  try {
+    const decodedToken = decodeTokenFromRequest(req);
 
-    const { startDate, endDate } = req.query;
-    try {
-      const decodedToken = decodeTokenFromRequest(req);
+    const { data, error } = await supabase
+      .from("Items")
+      .select("*")
+      .eq("user_id", decodedToken.user_id)
+      .gte("date_purchased", new Date(startDate).toISOString())
+      .lte("date_purchased", new Date(endDate).toISOString());
+    let cost = 0;
+    data.forEach((item) => {
+      cost += parseFloat(item.cost);
+    });
+    cost = cost.toFixed(2);
 
-      const { data, error } = await supabase
-        .from("Items")
-        .select("*")
-        .eq("user_id", decodedToken.user_id)
-        .gte("date_purchased", new Date(startDate).toISOString())
-        .lte("date_purchased", new Date(endDate).toISOString());
-      let cost = 0;
-      data.forEach((item) => {
-        cost += parseFloat(item.cost);
-      });
-      cost = cost.toFixed(2);
-
-      if (error) {
-        console.error("Select error: ", error);
-        return res.status(500).json({ error: "An unexpected error occurred" });
+    if (error) {
+      console.error("Select error: ", error);
+      return res.status(500).json({ error: "An unexpected error occurred" });
+    } else {
+      if (data.length === 0) {
+        res.status(200).json({});
       } else {
-        if (data.length === 0) {
-          res.status(200).json({});
-        } else {
-          res.status(200).json({ cost });
-        }
+        res.status(200).json({ cost });
       }
-    } catch (err) {
-      console.error("Error getting amount spent: ", err);
-      res.status(500).json({ error: "An unexpected error occurred" });
     }
+  } catch (err) {
+    console.error("Error getting amount spent: ", err);
+    res.status(500).json({ error: "An unexpected error occurred" });
   }
-);
+});
 
-router.post(
-  "/",
-  [
-    verifyToken,
-    check("name").not().isEmpty().trim().escape(),
-    check("cost").isNumeric().withMessage("Cost must be a number"),
-    check("date_purchased")
-      .isISO8601()
-      .toDate()
-      .withMessage("Invalid date format"),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+router.post("/", verifyToken, async (req, res) => {
+  const foodItem = req.body;
+  try {
+    const decodedToken = decodeTokenFromRequest(req);
+    foodItem.user_id = decodedToken.user_id;
+
+    const { error } = await supabase.from("Items").insert(foodItem);
+
+    if (error) {
+      console.error("Error inserting data: ", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-
-    const foodItem = req.body;
-    try {
-      const decodedToken = decodeTokenFromRequest(req);
-      foodItem.user_id = decodedToken.user_id;
-
-      const { error } = await supabase.from("Items").insert(foodItem);
-
-      if (error) {
-        console.error("Error inserting data: ", error);
-        return res.status(500).json({ message: "Internal server error" });
-      }
-      return res.status(200).json({ message: "Successfully inserted data" });
-    } catch (err) {
-      console.error("Error processing request:", err);
-      return res
-        .status(500)
-        .json({ error: "An internal server error occurred" });
-    }
+    return res.status(200).json({ message: "Successfully inserted data" });
+  } catch (err) {
+    console.error("Error processing request:", err);
+    return res.status(500).json({ error: "An internal server error occurred" });
   }
-);
+});
 
 module.exports = router;
