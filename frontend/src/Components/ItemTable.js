@@ -9,13 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import {
-  textColor1,
-  accentTwo,
-  textColor3,
-  primaryColor,
-  accentOne,
-} from "../themeSettings";
+import { textColor1, accentTwo, textColor3 } from "../themeSettings";
 import { useNavigate } from "react-router-dom";
 import ModalComponent from "./ModalComponent";
 import AddItem from "./AddItem";
