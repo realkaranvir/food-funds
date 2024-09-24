@@ -52,6 +52,7 @@ router.get(
     check("endDate").isISO8601().withMessage("Invalid endDate format"),
   ],
   async (req, res) => {
+    // Sanitize inputs check
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
