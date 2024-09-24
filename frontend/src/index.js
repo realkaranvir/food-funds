@@ -3,9 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { primaryColor } from "./themeSettings";
 
-document.body.style.backgroundColor = primaryColor;
+document.body.style.background = "linear-gradient(to bottom, #A4C5E5, #C2D8EE)";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

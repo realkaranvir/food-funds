@@ -3,6 +3,7 @@ const router = Router();
 const supabase = require("../supabase.js");
 const bcrypt = require("bcryptjs");
 const { signToken, verifyToken } = require("../jwt.js");
+const { check, validationResult } = require("express-validator");
 
 router.post("/signup", async (req, res) => {
   const { username, password, name, email_address } = req.body;

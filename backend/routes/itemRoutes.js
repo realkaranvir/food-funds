@@ -3,6 +3,7 @@ const router = Router();
 const supabase = require("../supabase.js");
 const { verifyToken } = require("../jwt.js");
 const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
 
 const decodeTokenFromRequest = (req) => {
   // return the decoded token if it's valid, null otherwise
@@ -22,59 +23,79 @@ const decodeTokenFromRequest = (req) => {
   }
 };
 
-router.get("/", verifyToken, async (req, res) => {
-  try {
-    const decodedToken = decodeTokenFromRequest(req);
+router.get(
+  "/",
+  [
+    verifyToken,
+    check("startDate").isISO8601().withMessage("Invalid startDate format"),
+    check("endDate").isISO8601().withMessage("Invalid endDate format"),
+  ],
+  async (req, res) => {
+    try {
+      const decodedToken = decodeTokenFromRequest(req);
 
-    const { data, error } = await supabase
-      .from("Items")
-      .select("*")
-      .eq("user_id", decodedToken.user_id);
+      const { data, error } = await supabase
+        .from("Items")
+        .select("*")
+        .eq("user_id", decodedToken.user_id);
 
-    if (error) {
-      console.error("Select error: ", error);
-      return res.status(500).json({ message: "Internal server error" });
-    } else {
-      return res.status(200).send(data);
-    }
-  } catch (err) {
-    console.error("Error fetching items: ", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-router.get("/amount-spent", verifyToken, async (req, res) => {
-  const { startDate, endDate } = req.query;
-  try {
-    const decodedToken = decodeTokenFromRequest(req);
-
-    const { data, error } = await supabase
-      .from("Items")
-      .select("*")
-      .eq("user_id", decodedToken.user_id)
-      .gte("date_purchased", new Date(startDate).toISOString())
-      .lte("date_purchased", new Date(endDate).toISOString());
-    let cost = 0;
-    data.forEach((item) => {
-      cost += parseFloat(item.cost);
-    });
-    cost = cost.toFixed(2);
-
-    if (error) {
-      console.error("Select error: ", error);
-      return res.status(500).json({ error: "An unexpected error occurred" });
-    } else {
-      if (data.length === 0) {
-        res.status(200).json({});
+      if (error) {
+        console.error("Select error: ", error);
+        return res.status(500).json({ message: "Internal server error" });
       } else {
-        res.status(200).json({ cost });
+        return res.status(200).send(data);
       }
+    } catch (err) {
+      console.error("Error fetching items: ", err);
+      res.status(500).json({ message: "Internal server error" });
     }
-  } catch (err) {
-    console.error("Error getting amount spent: ", err);
-    res.status(500).json({ error: "An unexpected error occurred" });
   }
-});
+);
+
+router.get(
+  "/amount-spent",
+  [
+    verifyToken,
+    check("name").not().isEmpty().trim().escape(),
+    check("cost").isNumeric().withMessage("Cost must be a number"),
+    check("date_purchased")
+      .isISO8601()
+      .toDate()
+      .withMessage("Invalid date format"),
+  ],
+  async (req, res) => {
+    const { startDate, endDate } = req.query;
+    try {
+      const decodedToken = decodeTokenFromRequest(req);
+
+      const { data, error } = await supabase
+        .from("Items")
+        .select("*")
+        .eq("user_id", decodedToken.user_id)
+        .gte("date_purchased", new Date(startDate).toISOString())
+        .lte("date_purchased", new Date(endDate).toISOString());
+      let cost = 0;
+      data.forEach((item) => {
+        cost += parseFloat(item.cost);
+      });
+      cost = cost.toFixed(2);
+
+      if (error) {
+        console.error("Select error: ", error);
+        return res.status(500).json({ error: "An unexpected error occurred" });
+      } else {
+        if (data.length === 0) {
+          res.status(200).json({});
+        } else {
+          res.status(200).json({ cost });
+        }
+      }
+    } catch (err) {
+      console.error("Error getting amount spent: ", err);
+      res.status(500).json({ error: "An unexpected error occurred" });
+    }
+  }
+);
 
 router.post("/", verifyToken, async (req, res) => {
   const foodItem = req.body;
